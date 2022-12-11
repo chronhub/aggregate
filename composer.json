@@ -10,9 +10,11 @@
         }
     ],
     "require": {
-        "php": "^8.1"
+        "php": "^8.1",
+        "chronhub/contracts": "dev-main"
     },
     "require-dev": {
+        "chronhub/message": "dev-main",
         "laravel/framework": "9.x",
         "laravel/pint": "^0.2",
         "nunomaduro/larastan": "^2.1",
