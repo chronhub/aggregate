@@ -25,6 +25,7 @@ use Chronhub\Aggregate\Tests\Double\SomeEvent;
 use Chronhub\Aggregate\Tests\ProphecyTestCase;
 use Chronhub\Aggregate\Tests\Stub\AggregateRootStub;
 use Chronhub\Aggregate\Tests\Stub\InteractWithRepositoryStub;
+use function iterator_to_array;
 
 final class InteractWithRepositoryTest extends ProphecyTestCase
 {
@@ -131,9 +132,7 @@ final class InteractWithRepositoryTest extends ProphecyTestCase
 
         $exception = new RuntimeException('foo');
 
-        $events = [
-            SomeEvent::fromContent(['foo' => 'bar']),
-        ];
+        $events = [SomeEvent::fromContent(['foo' => 'bar'])];
 
         $aggregateRoot = AggregateRootStub::create($this->someIdentity, ...$events);
 
@@ -146,7 +145,7 @@ final class InteractWithRepositoryTest extends ProphecyTestCase
             ->willReturn($stream)
             ->shouldBeCalledOnce();
 
-        $this->streamProducer->isFirstCommit(Argument::type(DomainEvent::class))->willReturn(true)->shouldBeCalledOnce();
+        $this->streamProducer->isFirstCommit(Argument::type(SomeEvent::class))->willReturn(true)->shouldBeCalledOnce();
         $this->chronicler->firstCommit($stream)
             ->willThrow($exception)
             ->shouldBeCalledOnce();
@@ -213,7 +212,7 @@ final class InteractWithRepositoryTest extends ProphecyTestCase
         $stream = new GenericStream($this->streamName, $events);
 
         $this->streamProducer->toStream($this->someIdentity, $events)->shouldNotBeCalled();
-        $this->streamProducer->isFirstCommit(Argument::type(DomainEvent::class))->shouldNotBeCalled();
+        $this->streamProducer->isFirstCommit($this->prophesize(DomainEvent::class)->reveal())->shouldNotBeCalled();
         $this->chronicler->firstCommit($stream)->shouldNotBeCalled();
         $this->chronicler->amend($stream)->shouldNotBeCalled();
         $this->aggregateCache->forget($this->someIdentity)->shouldNotBeCalled();
@@ -229,12 +228,7 @@ final class InteractWithRepositoryTest extends ProphecyTestCase
      */
     public function it_persists_aggregate_root_with_first_commit_and_decorate_domain_events(?Decorator $messageDecorator): void
     {
-        $events = [
-            SomeEvent::fromContent(['foo' => 'bar']),
-            SomeEvent::fromContent(['foo' => 'bar']),
-            SomeEvent::fromContent(['foo' => 'bar']),
-            SomeEvent::fromContent(['foo' => 'bar']),
-        ];
+        $events = iterator_to_array($this->provideFourDomainEvents());
 
         $aggregateRoot = AggregateRootStub::create($this->someIdentity, ...$events);
 
@@ -288,16 +282,11 @@ final class InteractWithRepositoryTest extends ProphecyTestCase
     public function it_persists_aggregate_root_and_decorate_domain_events(?Decorator $messageDecorator): void
     {
         /** @var AggregateRootStub $aggregateRoot */
-        $aggregateRoot = AggregateRootStub::reconstitute($this->someIdentity, $this->provideDomainEvents());
+        $aggregateRoot = AggregateRootStub::reconstitute($this->someIdentity, $this->provideFourDomainEvents());
 
         $this->assertEquals(4, $aggregateRoot->version());
 
-        $events = [
-            SomeEvent::fromContent(['foo' => 'bar']),
-            SomeEvent::fromContent(['foo' => 'bar']),
-            SomeEvent::fromContent(['foo' => 'bar']),
-            SomeEvent::fromContent(['foo' => 'bar']),
-        ];
+        $events = iterator_to_array($this->provideFourDomainEvents());
 
         $aggregateRoot->recordSomeEvents(...$events);
 
@@ -337,7 +326,7 @@ final class InteractWithRepositoryTest extends ProphecyTestCase
             ->willReturn($stream)
             ->shouldBeCalledOnce();
 
-        $this->streamProducer->isFirstCommit(Argument::type(DomainEvent::class))->willReturn(false)->shouldBeCalledOnce();
+        $this->streamProducer->isFirstCommit(Argument::type(SomeEvent::class))->willReturn(false)->shouldBeCalledOnce();
         $this->chronicler->amend($stream)->shouldBeCalledOnce();
         $this->aggregateCache->put($aggregateRoot)->shouldBeCalledOnce();
 
@@ -361,7 +350,7 @@ final class InteractWithRepositoryTest extends ProphecyTestCase
         ];
     }
 
-    public function provideDomainEvents(): Generator
+    public function provideFourDomainEvents(): Generator
     {
         yield from [
             SomeEvent::fromContent(['foo' => 'bar']),
