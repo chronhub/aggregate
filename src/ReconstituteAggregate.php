@@ -8,6 +8,7 @@ use Generator;
 use Chronhub\Contracts\Aggregate\Root;
 use Chronhub\Contracts\Aggregate\Identity;
 use Chronhub\Contracts\Message\DomainEvent;
+use Chronhub\Contracts\Chronicler\QueryFilter;
 
 trait ReconstituteAggregate
 {
@@ -28,7 +29,7 @@ trait ReconstituteAggregate
             }
 
             /** @var Root $aggregateRoot */
-            $aggregateRoot = $this->aggregateType->determineFromEvent($history->current());
+            $aggregateRoot = $this->aggregateType->tryFrom($history->current());
 
             return $aggregateRoot::reconstitute($aggregateId, $history);
         } catch (StreamNotFound) {
