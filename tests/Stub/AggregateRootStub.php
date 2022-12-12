@@ -27,6 +27,13 @@ class AggregateRootStub implements Root
         return $aggregateRoot;
     }
 
+    public function recordSomeEvents(SomeEvent ...$events): void
+    {
+        foreach ($events as $event) {
+            $this->recordThat($event);
+        }
+    }
+
     public function countRecordedEvents(): int
     {
         return count($this->recordedEvents);

@@ -9,6 +9,7 @@ use Chronhub\Contracts\Aggregate\Root;
 use Chronhub\Contracts\Aggregate\Identity;
 use Chronhub\Contracts\Message\DomainEvent;
 use Chronhub\Contracts\Chronicler\QueryFilter;
+use Chronhub\Chronicler\Exceptions\StreamNotFound;
 
 trait ReconstituteAggregate
 {

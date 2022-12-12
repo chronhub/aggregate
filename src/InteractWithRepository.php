@@ -86,7 +86,7 @@ trait InteractWithRepository
         $aggregateId = $aggregateRoot->aggregateId();
 
         $headers = [
-            EventHeader::AGGREGATE_ID => (string) $aggregateId,
+            EventHeader::AGGREGATE_ID => $aggregateId->toString(),
             EventHeader::AGGREGATE_ID_TYPE => $aggregateId::class,
             EventHeader::AGGREGATE_TYPE => $aggregateRoot::class,
         ];

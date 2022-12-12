@@ -14,11 +14,13 @@
         "chronhub/contracts": "dev-main"
     },
     "require-dev": {
+        "chronhub/chronicler": "dev-main",
         "chronhub/message": "dev-main",
+        "chronhub/stream": "dev-main",
+        "jangregor/phpstan-prophecy": "dev-master",
         "laravel/framework": "9.x",
         "laravel/pint": "^0.2",
         "nunomaduro/larastan": "^2.1",
-        "nunomaduro/phpinsights": "dev-master",
         "orchestra/testbench": "7.*",
         "phpspec/prophecy-phpunit": "dev-master",
         "phpunit/phpunit": "^9.5",
