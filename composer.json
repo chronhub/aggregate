@@ -47,11 +47,6 @@
             "dealerdirect/phpcodesniffer-composer-installer": true
         }
     },
-    "extra": {
-        "laravel": {
-            "providers": [],
-            "dont-discover": []
-        }
-    },
+    "extra": {},
     "minimum-stability": "dev"
 }
