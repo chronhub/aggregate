@@ -31,18 +31,18 @@ final class AggregateType implements Type
 
     public function tryFrom(Root|string|DomainEvent $event): string
     {
+        if ($event instanceof Root) {
+            $this->isSupported($event::class);
+
+            return $event::class;
+        }
+
         if ($event instanceof DomainEvent) {
             $aggregateType = $event->header(EventHeader::AGGREGATE_TYPE);
 
             $this->isSupported($aggregateType);
 
             return $aggregateType;
-        }
-
-        if ($event instanceof Root) {
-            $this->isSupported($event::class);
-
-            return $event::class;
         }
 
         $this->isSupported($event);
