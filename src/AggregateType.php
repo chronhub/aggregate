@@ -58,7 +58,7 @@ final class AggregateType implements Type
     }
 
     /**
-     * Assert if given aggregate root is supported as a top class or from inheritance
+     * Check if given aggregate root is supported as a top class or from inheritance
      *
      * @param  string  $aggregateRoot
      * @return bool
