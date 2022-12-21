@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Chronhub\Aggregate\Tests\Unit;
 
 use Symfony\Component\Uid\Uuid;
+use Chronhub\Testing\UnitTestCase;
 use Chronhub\Aggregate\V4AggregateId;
-use Chronhub\Aggregate\Tests\UnitTestCase;
 use Chronhub\Contracts\Aggregate\Identity;
 
 final class V4AggregateIdTest extends UnitTestCase

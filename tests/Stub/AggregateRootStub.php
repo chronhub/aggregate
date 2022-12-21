@@ -7,7 +7,7 @@ namespace Chronhub\Aggregate\Tests\Stub;
 use Chronhub\Contracts\Aggregate\Root;
 use Chronhub\Contracts\Aggregate\Identity;
 use Chronhub\Aggregate\HasAggregateBehaviour;
-use Chronhub\Aggregate\Tests\Double\SomeEvent;
+use Chronhub\Testing\Double\Message\SomeEvent;
 use function count;
 
 class AggregateRootStub implements Root

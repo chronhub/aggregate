@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Chronhub\Aggregate\Tests\Unit;
 
 use Generator;
+use Chronhub\Testing\UnitTestCase;
 use Chronhub\Aggregate\V4AggregateId;
 use Chronhub\Contracts\Aggregate\Root;
-use Chronhub\Aggregate\Tests\UnitTestCase;
-use Chronhub\Aggregate\Tests\Double\SomeEvent;
+use Chronhub\Testing\Double\Message\SomeEvent;
 use Chronhub\Aggregate\Tests\Stub\AggregateRootStub;
 
 final class HasAggregateBehaviorTest extends UnitTestCase

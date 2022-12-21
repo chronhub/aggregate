@@ -6,13 +6,13 @@ namespace Chronhub\Aggregate\Tests\Unit;
 
 use Prophecy\Prophecy\ObjectProphecy;
 use Chronhub\Contracts\Aggregate\Type;
+use Chronhub\Testing\ProphecyTestCase;
 use Chronhub\Contracts\Aggregate\Cache;
 use Chronhub\Contracts\Message\Envelop;
 use Chronhub\Contracts\Message\Decorator;
 use Chronhub\Aggregate\AggregateRepository;
 use Chronhub\Contracts\Chronicler\Chronicler;
 use Chronhub\Contracts\Stream\StreamProducer;
-use Chronhub\Aggregate\Tests\ProphecyTestCase;
 
 final class AggregateRepositoryTest extends ProphecyTestCase
 {

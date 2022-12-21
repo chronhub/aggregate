@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Chronhub\Aggregate\Tests\Unit;
 
 use Generator;
+use Chronhub\Testing\UnitTestCase;
 use Chronhub\Aggregate\V4AggregateId;
 use Chronhub\Aggregate\NullAggregateCache;
-use Chronhub\Aggregate\Tests\UnitTestCase;
 use Chronhub\Contracts\Aggregate\Identity;
 use Chronhub\Aggregate\Tests\Stub\AggregateRootStub;
 use Chronhub\Aggregate\Tests\Stub\AnotherAggregateRootStub;

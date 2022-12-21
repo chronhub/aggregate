@@ -9,14 +9,14 @@ use Chronhub\Aggregate\V4AggregateId;
 use Prophecy\Prophecy\ObjectProphecy;
 use Chronhub\Contracts\Aggregate\Type;
 use Chronhub\Stream\GenericStreamName;
+use Chronhub\Testing\ProphecyTestCase;
 use Chronhub\Contracts\Stream\StreamName;
 use Chronhub\Contracts\Aggregate\Identity;
 use Chronhub\Contracts\Message\DomainEvent;
 use Chronhub\Contracts\Chronicler\Chronicler;
 use Chronhub\Contracts\Stream\StreamProducer;
-use Chronhub\Aggregate\Tests\Double\SomeEvent;
-use Chronhub\Aggregate\Tests\ProphecyTestCase;
 use Chronhub\Contracts\Chronicler\QueryFilter;
+use Chronhub\Testing\Double\Message\SomeEvent;
 use Chronhub\Chronicler\Exceptions\StreamNotFound;
 use Chronhub\Aggregate\Tests\Stub\AggregateRootStub;
 use Chronhub\Aggregate\Tests\Stub\ReconstituteAggregateRootStub;
@@ -187,10 +187,10 @@ final class ReconstituteAggregateTest extends ProphecyTestCase
     private function provideDummyEvents(): Generator
     {
         yield from [
-            SomeEvent::fromContent(['foo' => 'bar']),
-            SomeEvent::fromContent(['foo' => 'bar']),
-            SomeEvent::fromContent(['foo' => 'bar']),
-            SomeEvent::fromContent(['foo' => 'bar']),
+            SomeEvent::fromContent(['count' => 1]),
+            SomeEvent::fromContent(['count' => 2]),
+            SomeEvent::fromContent(['count' => 3]),
+            SomeEvent::fromContent(['count' => 4]),
         ];
 
         return 4;
