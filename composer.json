@@ -1,6 +1,6 @@
 {
     "name": "chronhub/aggregate",
-    "description": "aggregate",
+    "description": "Aggregate root design behavior and data",
     "keywords": ["aggregate root", "laravel"],
     "license": "MIT",
     "authors": [
@@ -11,14 +11,15 @@
     ],
     "require": {
         "php": "^8.1",
-        "chronhub/contracts": "dev-main"
-    },
-    "require-dev": {
+        "chronhub/contracts": "dev-main",
         "chronhub/chronicler": "dev-main",
         "chronhub/message": "dev-main",
         "chronhub/stream": "dev-main",
+        "symfony/uid": "6.3.x"
+    },
+    "require-dev": {
+        "chronhub/testing": "dev-main",
         "illuminate/contracts" : "9.x",
-        "symfony/uid": "6.3.x",
         "jangregor/phpstan-prophecy": "dev-master",
         "laravel/pint": "^0.2",
         "nunomaduro/larastan": "^2.1",
