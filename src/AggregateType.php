@@ -29,10 +29,10 @@ final class AggregateType implements Type
         }
     }
 
-    public function tryFrom(Root|string|DomainEvent $event): string
+    public function from(Root|string|DomainEvent $event): string
     {
         if ($event instanceof Root) {
-            $this->isSupported($event::class);
+            $this->assertAggregateIsSupported($event::class);
 
             return $event::class;
         }
@@ -40,36 +40,36 @@ final class AggregateType implements Type
         if ($event instanceof DomainEvent) {
             $aggregateType = $event->header(EventHeader::AGGREGATE_TYPE);
 
-            $this->isSupported($aggregateType);
+            $this->assertAggregateIsSupported($aggregateType);
 
             return $aggregateType;
         }
 
-        $this->isSupported($event);
+        $this->assertAggregateIsSupported($event);
 
         return $this->concrete;
     }
 
-    public function isSupported(string $aggregateRoot): void
-    {
-        if (! $this->supportAggregateRoot($aggregateRoot)) {
-            throw new InvalidArgumentException("Aggregate root $aggregateRoot class is not supported");
-        }
-    }
-
-    /**
-     * Check if given aggregate root is supported as a top class or from inheritance
-     *
-     * @param  string  $aggregateRoot
-     * @return bool
-     */
-    private function supportAggregateRoot(string $aggregateRoot): bool
+    public function isSupported(string $aggregateRoot): bool
     {
         if ($aggregateRoot === $this->concrete) {
             return true;
         }
 
         return in_array($aggregateRoot, $this->map, true);
+    }
+
+    /**
+     * @param  string  $aggregate
+     * @return void
+     *
+     * @throws InvalidArgumentException
+     */
+    private function assertAggregateIsSupported(string $aggregate): void
+    {
+        if (! $this->isSupported($aggregate)) {
+            throw new InvalidArgumentException("Aggregate root $aggregate class is not supported");
+        }
     }
 
     public function current(): string

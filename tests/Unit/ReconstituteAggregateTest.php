@@ -62,7 +62,7 @@ final class ReconstituteAggregateTest extends ProphecyTestCase
             ->shouldBeCalledOnce();
 
         $this->aggregateType
-            ->tryFrom($events[0])
+            ->from($events[0])
             ->willReturn(AggregateRootStub::class)
             ->shouldBeCalledOnce();
 
@@ -97,7 +97,7 @@ final class ReconstituteAggregateTest extends ProphecyTestCase
             ->shouldBeCalledOnce();
 
         $this->aggregateType
-            ->tryFrom($events[0])
+            ->from($events[0])
             ->willReturn(AggregateRootStub::class)
             ->shouldBeCalledOnce();
 
@@ -135,7 +135,7 @@ final class ReconstituteAggregateTest extends ProphecyTestCase
             ->shouldBeCalledOnce();
 
         $this->aggregateType
-            ->tryFrom(AggregateRootStub::class)
+            ->from(AggregateRootStub::class)
             ->shouldNotBeCalled();
 
         $this->chronicler
@@ -165,7 +165,7 @@ final class ReconstituteAggregateTest extends ProphecyTestCase
             ->shouldBeCalledOnce();
 
         $this->aggregateType
-            ->tryFrom($this->prophesize(DomainEvent::class)->reveal())
+            ->from($this->prophesize(DomainEvent::class)->reveal())
             ->shouldNotBeCalled();
 
         $this->chronicler

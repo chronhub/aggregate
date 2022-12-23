@@ -53,6 +53,19 @@ final class AggregateTypeTest extends UnitTestCase
 
     /**
      * @test
+     */
+    public function it_raise_exception_when_aggregate_root_is_not_supported(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Aggregate root '.AnotherAggregateRootStub::class.' class is not supported');
+
+        $aggregateType = new AggregateType(AggregateRootStub::class, [AggregateRootChildStub::class]);
+
+        $aggregateType->from(AnotherAggregateRootStub::class);
+    }
+
+    /**
+     * @test
      * @dataProvider provideValidAggregateTypeHeader
      */
     public function it_support_aggregate_root(string $aggregateTypeHeader): void
@@ -65,7 +78,7 @@ final class AggregateTypeTest extends UnitTestCase
             ->withHeaders([EventHeader::AGGREGATE_TYPE => $aggregateTypeHeader]);
 
         /** @var DomainEvent $domainEvent */
-        $aggregateRoot = $aggregateType->tryFrom($domainEvent);
+        $aggregateRoot = $aggregateType->from($domainEvent);
 
         $this->assertEquals($aggregateTypeHeader, $aggregateRoot);
     }
@@ -73,14 +86,11 @@ final class AggregateTypeTest extends UnitTestCase
     /**
      * @test
      */
-    public function it_raise_exception_when_aggregate_root_is_not_supported(): void
+    public function it_check_if_aggregate_root_is_supported(): void
     {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Aggregate root '.AnotherAggregateRootStub::class.' class is not supported');
-
         $aggregateType = new AggregateType(AggregateRootStub::class, [AggregateRootChildStub::class]);
 
-        $aggregateType->isSupported(AnotherAggregateRootStub::class);
+        $this->assertTrue($aggregateType->isSupported(AggregateRootChildStub::class));
     }
 
     /**
@@ -92,12 +102,12 @@ final class AggregateTypeTest extends UnitTestCase
 
         $this->assertEquals(
             AggregateRootStub::class,
-            $aggregateType->tryFrom(AggregateRootStub::create(V4AggregateId::create()))
+            $aggregateType->from(AggregateRootStub::create(V4AggregateId::create()))
         );
 
         $this->assertEquals(
             AggregateRootStub::class,
-            $aggregateType->tryFrom(AggregateRootChildStub::create(V4AggregateId::create()))
+            $aggregateType->from(AggregateRootChildStub::create(V4AggregateId::create()))
         );
     }
 
@@ -112,12 +122,12 @@ final class AggregateTypeTest extends UnitTestCase
 
         $this->assertEquals(
             AggregateRootStub::class,
-            $aggregateType->tryFrom(AggregateRootStub::class)
+            $aggregateType->from(AggregateRootStub::class)
         );
 
         $this->assertEquals(
             AggregateRootStub::class,
-            $aggregateType->tryFrom(AggregateRootChildStub::class)
+            $aggregateType->from(AggregateRootChildStub::class)
         );
     }
 

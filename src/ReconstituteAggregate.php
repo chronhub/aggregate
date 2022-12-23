@@ -30,7 +30,7 @@ trait ReconstituteAggregate
             }
 
             /** @var Root $aggregateRoot */
-            $aggregateRoot = $this->aggregateType->tryFrom($history->current());
+            $aggregateRoot = $this->aggregateType->from($history->current());
 
             return $aggregateRoot::reconstitute($aggregateId, $history);
         } catch (StreamNotFound) {
